@@ -1,0 +1,7 @@
+.Navbar {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    background: rgb(18, 18, 18);
+    padding: 0% 25%;
+}

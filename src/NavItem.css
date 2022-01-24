@@ -1,0 +1,15 @@
+.NavItem {
+    background: rgb(18,18,18);
+    color: rgb(231, 231, 231);
+    padding: 8px 24px;
+    list-style-type: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 17px;
+    transition-property: all;
+}
+
+.NavItem:hover {
+    background-color: rgb(59, 59, 59);
+    color: white;
+    transition-duration: 0.2s;
+}
