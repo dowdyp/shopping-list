@@ -1,6 +1,6 @@
 import React from 'react';
-import Navigation from './Navbar';
-import Content from './Content';
+import Navigation from './components/Navigation/Navbar';
+import Content from './components/ContentFeed/Content';
 
 
 class App extends React.Component {

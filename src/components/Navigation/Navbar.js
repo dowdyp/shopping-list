@@ -13,11 +13,12 @@ class Navigation extends React.Component {
                 <ul className='Navbar'>
                     <NavItem label="LISTS" />
                     <NavItem label="STORES" />
-                    <NavItem label="PROFILE" />
+                    <div className="AlignRight">
+                        <NavItem icon="new-list"/>
+                        <NavItem icon="profile" />
+                    </div>
                 </ul>
             </div>
-
-
         )
     }
 }

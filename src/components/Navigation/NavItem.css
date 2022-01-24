@@ -13,3 +13,7 @@
     color: white;
     transition-duration: 0.2s;
 }
+
+.AlignRight {
+    justify-content: flex-end;
+}
