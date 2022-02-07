@@ -1,5 +1,5 @@
 import React from 'react';
-import './NavItem.css'
+import './navitem.css'
 import { AiOutlinePlusCircle, AiOutlineUser } from 'react-icons/ai';
 
 function NavItem(props) {
@@ -9,17 +9,13 @@ function NavItem(props) {
     }
 
     return props.icon ? (
-            <a>
-                <li className="NavItem">
-                    {icons[props.icon]}
-                </li>
-            </a>
-        ) : (
-        <a>
-            <li className="NavItem">
-                {props.label}
-            </li>
-        </a>
+        <li className="NavItem">
+            <a href="#">{icons[props.icon]}</a>
+        </li>
+    ) : (
+        <li className="NavItem">
+            <a href="#">{props.label}</a>
+        </li>
     )
 }
 

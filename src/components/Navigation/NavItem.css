@@ -1,18 +1,41 @@
+li a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    padding: 13px 24px;
+}
+
+a svg {
+    padding-top: 3px;
+}
+
 .NavItem {
-    background: rgb(18,18,18);
-    color: rgb(231, 231, 231);
-    padding: 8px 24px;
+    background: #f44336;
+    color: white;
     list-style-type: none;
     font-family: 'Outfit', sans-serif;
     font-size: 17px;
     transition-property: all;
+    height: 100%;
 }
 
 .NavItem:hover {
-    background-color: rgb(59, 59, 59);
+    background-color: #e53935;
     color: white;
     transition-duration: 0.2s;
 }
+
+.NavLabel {
+    background: #f44336;
+    color: white;
+    list-style-type: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    min-width: fit-content;
+    padding: 13px 5px;
+}
+
 
 .AlignRight {
     justify-content: flex-end;

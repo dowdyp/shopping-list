@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './components/Navigation/Navbar';
 import Content from './components/ContentFeed/Content';
-
+import './app.css';
 
 class App extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ class App extends React.Component {
 
     render() {
         return(
-            <div className="appContainer">
+            <div className="AppContainer">
                 <Navigation />
                 <Content />
             </div>

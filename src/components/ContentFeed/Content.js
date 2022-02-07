@@ -1,6 +1,6 @@
 import React from 'react';
 import List from '../List/List';
-import './Content.css'
+import './content.css'
 
 function Content(props) {
     const test_list = [

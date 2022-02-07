@@ -1,0 +1,18 @@
+.hamburger-menu {
+    display: flex;
+    flex-direction: row;
+    background: #f44336;
+    justify-content: space-between;
+    height: 50px;
+}
+
+.hamburger {
+    width: 20px; 
+    height: 20px;
+    padding: 10px;
+}
+
+.hamburger-menu svg {
+    width: 20px;
+    height: 20px;
+}
