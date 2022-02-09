@@ -1,4 +1,6 @@
 .hamburger-menu {
+    position: fixed;
+    width: 100%;
     display: flex;
     flex-direction: row;
     background: #f44336;
