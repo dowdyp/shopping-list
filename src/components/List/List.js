@@ -1,5 +1,5 @@
 import React from 'react';
-import './List.css';
+import './list.css';
 
 function List(props) {
     return(
@@ -8,7 +8,7 @@ function List(props) {
                 {props.storeName}
             </div>
             <div className="NumberOfItems">
-                {props.numberOfItems}
+                {props.numberOfItems} Items
             </div>
             <div className="Total">
                 ${props.total.toFixed(2)}

@@ -1,6 +1,7 @@
 import React from 'react';
 import NavItem from './NavItem';
 import HamburgerMenu from './Hamburger';
+import Modal from '../Modal/Modal';
 import NavLabel from './NavLabel'
 import './navbar.css'
 
