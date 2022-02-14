@@ -1,5 +1,5 @@
 import React from 'react';
-import './list.css';
+import './shoppinglist.css';
 
 function List(props) {
     return(

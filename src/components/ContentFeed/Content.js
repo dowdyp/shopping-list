@@ -1,5 +1,6 @@
 import React from 'react';
-import List from '../List/List';
+import ShoppingList from '../ShoppingList/ShoppingList';
+import { List, BrowserRouter } from 'react-router-dom';
 import './content.css'
 
 function Content(props) {
@@ -9,7 +10,7 @@ function Content(props) {
         {name: 'Sam\'s Club', total: 144.44, numberOfItems: 14}
     ]
     const lists = test_list.map(list =>
-      <List storeName={list.name} total={list.total} numberOfItems={list.numberOfItems} />
+      <ShoppingList storeName={list.name} total={list.total} numberOfItems={list.numberOfItems} />
     );
     return (
         <div className="ContentContainer">

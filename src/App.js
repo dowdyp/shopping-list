@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Navigation from './components/Navigation/Navbar';
 import Content from './components/ContentFeed/Content';
+import ListCreator from './components/ListCreator/ListCreator';
 import './app.css';
 
 class App extends React.Component {
@@ -13,8 +14,13 @@ class App extends React.Component {
     render() {
         return(
             <div className="AppContainer">
+                <BrowserRouter>
                 <Navigation />
-                <Content />
+                    <Routes>
+                        <Route path="/" element={<Content />} />
+                        <Route path="/new-list" element={<ListCreator />} />
+                    </Routes>
+                </BrowserRouter>
             </div>
         )
     }

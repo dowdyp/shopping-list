@@ -1,18 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import NavItem from './NavItem';
 import HamburgerMenu from './Hamburger';
-import Modal from '../Modal/Modal';
 import NavLabel from './NavLabel'
 import './navbar.css'
 
-function Navigation() {
+function Navigation(props) {
     return(
         <div>
             <ul className='navbar'>
                 <NavItem label="LISTS" />
                 <NavItem label="STORES" />
                 <div className="align-right">
-                    <NavItem icon="new-list"/>
+                    <Link to="/new-list"><NavItem icon="new-list-icon"/></Link>
                     <NavItem icon="profile" />
                 </div>
             </ul>
