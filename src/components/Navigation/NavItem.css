@@ -1,23 +1,23 @@
-li a {
-    display: block;
-    text-align: center;
-    text-decoration: none;
+li button {
     color: white;
-    padding: 13px 24px;
-}
-
-a svg {
-    padding-top: 3px;
+    background: none;
+    text-decoration: none;
+    border: none;
 }
 
 .NavItem {
     background: #f44336;
     color: white;
     list-style-type: none;
+    text-decoration: none;
     font-family: 'Outfit', sans-serif;
     font-size: 17px;
+    font-weight: 700;
     transition-property: all;
     height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
 }
 
 .NavItem:hover {

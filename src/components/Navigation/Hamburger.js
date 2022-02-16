@@ -4,9 +4,7 @@ import './hamburger.css';
 
 function HamburgerMenu(props) {
     return (
-    <li className="NavItem">
-        <a href="#"><GiHamburgerMenu classname="Hamburger" /></a>
-    </li>
+        
     )
 }
 

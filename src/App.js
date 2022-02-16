@@ -1,29 +1,33 @@
-import React from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import Navigation from './components/Navigation/Navbar';
-import Content from './components/ContentFeed/Content';
+import React, { useState } from 'react';
+import { Route, Routes, BrowserRouter, useLocation } from 'react-router-dom';
+import Navigation from './components/Navigation/Navigation';
+import UserLists from './components/ContentFeed/UserLists';
 import ListCreator from './components/ListCreator/ListCreator';
 import './app.css';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {name: "Parker", loc: ""}
-    }
+function App(props) {
 
-    render() {
-        return(
+    const [name, setName] = useState("")
+    const [location, setLocation] = useState("Your Lists")
+
+    return(
+        <BrowserRouter>
             <div className="AppContainer">
-                <BrowserRouter>
-                <Navigation />
+                {/* NAVBAR */}
+                <Navigation location={location}/>
+                {/* MAIN APP FUNCTIONALITY */}
+                <div className="ContentContainer">
+                    <div className="main-header">
+                        {location}
+                    </div>
                     <Routes>
-                        <Route path="/" element={<Content />} />
-                        <Route path="/new-list" element={<ListCreator />} />
+                        <Route path="/" element={<UserLists setLocation={setLocation} />}/>
+                        <Route path="/new-list" element={<ListCreator setLocation={setLocation} />} />
                     </Routes>
-                </BrowserRouter>
+                </div>
             </div>
-        )
-    }
+        </BrowserRouter>
+    )
 }
 
 export default App;

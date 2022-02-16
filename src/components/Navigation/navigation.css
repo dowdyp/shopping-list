@@ -10,12 +10,38 @@
     height: 50px;
 }
 
+.navbar a {
+    text-decoration: none;
+}
+
 .align-right {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: flex-end;
 }
+
+.hamburger-menu {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background: #f44336;
+    justify-content: left ;
+    height: 50px;
+}
+
+.hamburger {
+    width: 20px; 
+    height: 20px;
+    padding: 10px;
+}
+
+.hamburger-menu svg {
+    width: 20px;
+    height: 20px;
+}
+
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 991px) {
@@ -28,7 +54,7 @@
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1280px) {
     .hamburger-menu {
         display: none;
     }

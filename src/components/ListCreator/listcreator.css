@@ -1,0 +1,45 @@
+.list-form {
+    display: flex;
+    flex-direction: row;
+}
+
+.list-form input {
+    padding: 7px 3px;
+    margin-bottom: 5px;
+    border: 0px grey;
+    border-bottom: solid 2px rgb(190, 190, 190);
+    transition: 0.05s;
+    font-family: "Roboto Condensed", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.list-form input:focus {
+    border-bottom: solid 3px rgb(63, 63, 63)
+}
+
+.list-form input:hover {
+    border-bottom: solid 3px rgb(63, 63, 63)
+}
+
+.list-form svg {
+    height:auto;
+    width: 50px;
+}
+
+input {
+    outline: none;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 991px) {
+    input {
+        width: 100%;
+        font-size: 30px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 1280px) {
+
+}

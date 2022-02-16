@@ -4,17 +4,17 @@ import { AiOutlinePlusCircle, AiOutlineUser } from 'react-icons/ai';
 
 function NavItem(props) {
     const icons = {
-        'profile-icon': <AiOutlineUser/>,
+        'profile-icon': <AiOutlineUser />,
         'new-list-icon': <AiOutlinePlusCircle />
     }
 
     return props.icon ? (
         <li className="NavItem">
-            <a href="#">{icons[props.icon]}</a>
+            {icons[props.icon]}
         </li>
     ) : (
         <li className="NavItem">
-            <a href="#">{props.label}</a>
+            {props.label}
         </li>
     )
 }
