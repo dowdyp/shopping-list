@@ -2,16 +2,19 @@ import React from 'react';
 import './shoppinglist.css';
 
 function List(props) {
+
+    const { storeName, numberOfItems, total } = props
+
     return(
         <div className="ListContainer">
             <div className="StoreName">
-                {props.storeName}
+                {storeName}
             </div>
             <div className="NumberOfItems">
-                {props.numberOfItems} Items
+                {numberOfItems} Items
             </div>
             <div className="Total">
-                ${props.total.toFixed(2)}
+                ${total.toFixed(2)}
             </div>
             <div className="ButtonContainer">
                 <button className="ViewListButton">View List</button>

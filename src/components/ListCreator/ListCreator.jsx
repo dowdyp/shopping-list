@@ -1,56 +1,66 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
+import { useNavigate } from 'react-router';
 import ShoppingListItems from '../ShoppingListItem/ShoppingListItems';
 import './listcreator.css';
 
 function ListCreator(props) {
     
-    const test_items = [
-        {key: 1, title: "Farts", price: 550},
-        {key: 2, title: "Penuis", price: 400}
-    ]
+    const items = []
 
+    const navigate = useNavigate()
     const [editing, setIsEditing] = useState(false);
     const [value, setValue] = useState("");
-    const [items, setItems] = useState(test_items)
+    const [listItems, setItems] = useState(items)
+    const [name, setName] = useState("")
 
     useEffect(() => {
         props.setLocation("New List")
     }, [])
 
     const addItemHandler = () => {
-        items.push({title: value, price: 500})
+        setItems(items => [...items, {name: value, total: 500}])
         setValue("")
         setIsEditing(false);
     }
 
-    const handleChange = (event) => {
+    const handleListNameChange = (event) => {
+        setName(event.target.value)
+    }
+
+    const handleItemNameChange = (event) => {
         setValue(event.target.value)
     }
 
+    const submitNewList = () => {
+        addListToUser(name, listItems)
+        navigate('/', {replace: true})
+    }
+
+    const { addListToUser } = props;
+
     return (
         <div>
-            <form>
-                <div className="list-form">
-                    <input type="text" placeholder="Name"></input>
-                </div>
-                <div>
-                    {items.length === 0 ?
-                    <div>No items!</div>
-                    :
-                    <ShoppingListItems items={items}/>
-                    }
-                </div>
-                {editing ? 
-                    <div>
-                        <input placeholder="Item Name" onChange={handleChange}></input>
-                        <button type="button" onClick={addItemHandler}>Add</button>
-                    </div>
+            <div className="list-form">
+                <input type="text" placeholder="Name" onChange={handleListNameChange}></input>
+                <button onClick={submitNewList}>Save List</button>
+            </div>
+            <div>
+                {listItems.length === 0 ?
+                <div>No items!</div>
                 :
-                    null
+                <ShoppingListItems listItems={listItems}/>
                 }
-                <button type="button" onClick={() => setIsEditing(!editing)}><AiOutlinePlusSquare /></button>
-            </form>
+            </div>
+            {editing ? 
+                <div>
+                    <input placeholder="Item Name" onChange={handleItemNameChange}></input>
+                    <button type="button" onClick={addItemHandler}>Add</button>
+                </div>
+            :
+                null
+            }
+            <button type="button" onClick={() => setIsEditing(!editing)}><AiOutlinePlusSquare /></button>
         </div>
     )
 }
