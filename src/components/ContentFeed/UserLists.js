@@ -8,12 +8,16 @@ function UserLists({setLocation, userLists}) {
         setLocation("Your Lists")
     }, [])
     
-    const lists = userLists.map(list =>
-      <ShoppingList key={list.id} storeName={list.name} total={list.total} numberOfItems={list.numberOfItems} />
-    );
+    const {userLists} = props;
     
+    const mapData = (userLists) => {
+        const lists = userLists.map(list => 
+            <ShoppingList key={list.id} storeName={list.name} total={list.total} numberOfItems={list.numberOfItems} />  )
+        return lists
+    }
+
     return (
-        lists
+        userLists ? mapData(userLists) : <div>No Lists</div>
     )
 }
 

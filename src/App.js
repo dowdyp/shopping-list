@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import UserLists from './components/ContentFeed/UserLists';
@@ -8,12 +8,6 @@ import Register from './components/Register/Register';
 import './app.css';
 
 function App(props) {
-
-    // const userLists = [
-    //     {id: 1, name: "Home Depot", total: 127.40, numberOfItems: 3},
-    //     {id: 2, name: "Microcenter", total: 2938.49, numberOfItems: 2},
-    //     {id: 3, name: 'Sam\'s Club', total: 144.44, numberOfItems: 14}
-    // ]
 
     const [location, setLocation] = useState("Your Lists")
     const [lists, setLists] = useState([])
@@ -28,6 +22,20 @@ function App(props) {
             numberOfItems: list.length
         }])
         setKey(key + 1)
+    }
+
+    useEffect(() => {
+        const data = getLists()
+        .then(data => {
+            setLists(data);
+        })
+    }, [])
+
+    const getLists = async () => {
+        const response = await fetch("http://localhost:3001/lists");
+        const data = await response.json();
+
+        return data
     }
 
     return(
