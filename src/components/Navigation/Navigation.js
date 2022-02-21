@@ -20,7 +20,7 @@ function Navigation(props) {
                 <NavItem label="STORES" />
                 <div className="align-right">
                     <Link to="/new-list"><NavItem icon="new-list-icon"/></Link>
-                    <NavItem icon="profile-icon" />
+                    <Link to="/login"><NavItem icon="profile-icon" /></Link>
                 </div>
             </ul>
             <div className="hamburger-menu">

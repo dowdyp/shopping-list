@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import ShoppingList from '../ShoppingList/ShoppingList';
 import './userlists.css'
 
-function UserLists(props) {
+function UserLists({setLocation, userLists}) {
     
     useEffect(() => {
-        props.setLocation("Your Lists")
+        setLocation("Your Lists")
     }, [])
     
-    const lists = props.userLists.map(list =>
+    const lists = userLists.map(list =>
       <ShoppingList key={list.id} storeName={list.name} total={list.total} numberOfItems={list.numberOfItems} />
     );
     
