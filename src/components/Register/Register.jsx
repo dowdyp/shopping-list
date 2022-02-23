@@ -17,12 +17,14 @@ export default function Register(props) {
     axios({
         method: "POST",
         data: {
-        username: email,
-        password: password,
+          username: email,
+          password: password,
         },
         withCredentials: true,
-        url: "http://localhost:4000/register",
-    }).then((res) => console.log(res));
+        url: "http://localhost:3001/register",
+    }).then(() => {
+      navigate("/", { replace: true })
+    });
   }
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

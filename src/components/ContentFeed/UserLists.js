@@ -1,22 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ShoppingList from '../ShoppingList/ShoppingList';
+import axios from 'axios';
 import './userlists.css'
 
-function UserLists({setLocation, userLists}) {
-    
+export default function UserLists(props) {
+
+    const [userLists, setUserLists] = useState([])
+    const [isLoading, setLoading] = useState(true)
+
     useEffect(() => {
-        setLocation("Your Lists")
+        props.setLocation("Your Lists")
+        axios({
+            method: "GET",
+            url: "/lists",
+            withCredentials: true,
+        }).then((res) => {
+            console.log(res.data)
+            if (res.data.length !== 0) {
+                setUserLists(res.data.lists)
+            }
+            setLoading(false)
+        });
     }, [])
-    
-    const mapData = (userLists) => {
-        const lists = userLists.map(list => 
-            <ShoppingList key={list.id} storeName={list.name} total={list.total} numberOfItems={list.numberOfItems} />  )
-        return lists
-    }
 
     return (
-        userLists ? mapData(userLists) : <div>No Lists</div>
+        ((!isLoading && userLists !== undefined && userLists.length > 0) ? (userLists.map(list => 
+            <ShoppingList 
+                key={list.id} 
+                storeName={list.name} 
+                total={list.total} 
+                numberOfItems={list.numberOfItems} />  )) 
+            : 
+            <div>No Lists</div>
+        )
     )
 }
-
-export default UserLists

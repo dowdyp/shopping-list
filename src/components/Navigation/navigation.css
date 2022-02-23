@@ -42,6 +42,30 @@
     height: 20px;
 }
 
+.profile-hover:hover .dropdown-menu {
+    display: block;
+    float: right;
+}
+
+.dropdown-menu {
+    position: relative;
+    right: 0;
+    padding: 0;
+    background-color: white;
+    border: solid 1px grey;
+    list-style: none;
+    font-family: "Outfit", sans-serif;
+    border-radius: 3px;
+    text-align: start;
+}
+
+.dropdown-menu li {
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+
+}
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 991px) {

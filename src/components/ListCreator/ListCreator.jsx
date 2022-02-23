@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import { useNavigate } from 'react-router';
 import ShoppingListItems from '../ShoppingListItem/ShoppingListItems';
+import axios from 'axios';
 import './listcreator.css';
 
 function ListCreator(props) {
@@ -12,38 +13,53 @@ function ListCreator(props) {
     const [editing, setIsEditing] = useState(false);
     const [value, setValue] = useState("");
     const [listItems, setItems] = useState(items)
+    const [listTotalValue, setListTotalValue] = useState(0)
     const [name, setName] = useState("")
 
     useEffect(() => {
         props.setLocation("New List")
-    }, [])
+    })
 
     const addItemHandler = () => {
-        setItems(items => [...items, {name: value, total: 500}])
-        setValue("")
+        setItems(items => [...items, {name: value, total: 500}]);
+        setListTotalValue(listTotalValue + 500);
+        setValue("");
         setIsEditing(false);
     }
 
     const handleListNameChange = (event) => {
-        setName(event.target.value)
+        setName(event.target.value);
     }
 
     const handleItemNameChange = (event) => {
-        setValue(event.target.value)
+        setValue(event.target.value);
     }
 
-    const submitNewList = () => {
-        addListToUser(name, listItems)
-        navigate('/', {replace: true})
+    const addListToUser = () => {
+        if (listItems.length !== 0) {
+            axios({
+                method: "POST", 
+                data: {
+                    name: name,
+                    total: listTotalValue,
+                    items: items,
+                },
+                url: "/add-list",
+                withCredentials: true,
+            }).then((res) => {
+                console.log(res.data.message)
+                navigate("/", { replace: true })
+            });
+        } else {
+            console.log("cannot submit empty list")
+        }
     }
-
-    const { addListToUser } = props;
 
     return (
         <div>
             <div className="list-form">
                 <input type="text" placeholder="Name" onChange={handleListNameChange}></input>
-                <button onClick={submitNewList}>Save List</button>
+                <button onClick={addListToUser}>Save List</button>
             </div>
             <div>
                 {listItems.length === 0 ?

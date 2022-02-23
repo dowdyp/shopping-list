@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-    email: {
+    username: {
         type: String,
         required: true
     },
@@ -11,8 +11,9 @@ const userSchema = new Schema({
         required: true
     },
     lists: {
-        type: Map,
-        requied: false
+        type: Array,
+        requied: true,
+        default: []
     }
 }, {timestamps: true})
 

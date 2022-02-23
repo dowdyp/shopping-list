@@ -1,86 +1,126 @@
-require('dotenv').config()
-
-const PORT = process.env.PORT || 3001;
-
+require("dotenv").config();
+const PORT = process.env.NODE_PORT || 3001;
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
+const passportLocal = require("passport-local").Strategy;
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const User = require("./models/user");
 const bodyParser = require("body-parser");
-
 const app = express();
+
+const db_url = process.env.MONGO_URL
+
+//-----------------------------------
+
+mongoose.connect(
+  db_url,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  () => {
+    console.log("Mongoose is connected.");
+  }
+);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(
   session({
-    secret: process.env.APPLICATION_SECRET,
-    saveUninitialized: false,
-    resave: false
-  })
-);
-require("./passportconfig")(passport);
-app.use(passport.initialize())
-app.use(passport.session());
-app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true
-}));
-app.use(cookieParser(process.env.APPLICATION_SECRET));
-
-const lists = {
-  "poop123" : [
-    { id: 1, name: "Home Depot", total: 127.4, numberOfItems: 3 },
-    { id: 2, name: "Microcenter", total: 2938.49, numberOfItems: 2 },
-    { id: 3, name: "Sam's Club", total: 144.44, numberOfItems: 14 },
-  ]
-};
-
-app.post("/login", (req, res) => {
-  passport.authenticate("local", (err, user, info) => {
-    console.log(user)
-    if (err) console.log(err);
-    if (!user) res.json({ message: "No user found."} )
-    else {
-      req.logIn(user, (err) => {
-        if (err) console.log(err);
-        res.json({ message: "Logged in."});
-        console.log(req.user);
-      })
+    secret: process.env.APP_SECRET,
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+      secure: false,
+      maxAge: 3600000,
     }
   })
+);
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use(cookieParser(process.env.APP_SECRET));
+app.use(passport.initialize());
+app.use(passport.session());
+require("./passportconfig")(passport);
+
+//---------------------------
+
+app.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user) => {
+    if (err) console.log(err);
+    if (!user) res.status(401).json({ message: "No user found." });
+    else {
+      req.login(user, (err) => {
+        if (err) console.log(err);
+        res.status(200).json({ message: "Logged in." });
+      });
+    }
+  })(req, res, next);
 });
 
 app.post("/register", (req, res) => {
-  console.log(req.body)
-  User.findOne({email : req.body.email}, (err, doc) => {
+  User.findOne({ username: req.body.username }, (err, doc) => {
     if (err) console.log(err);
-    if (doc) res.json({ message: "User already exists."});
+    if (doc) res.json({ message: "User already exists." });
     if (!doc) {
       bcrypt.hash(req.body.password, 10).then((hash) => {
         const newUser = new User({
-          email: req.body.email,
+          username: req.body.username,
           password: hash,
-          lists: []
         });
-        newUser.save()
-      })
-      res.status(200).json({ message : "User successfully created."})
+        newUser.save();
+      });
+      res.status(200).json({ message: "User successfully created." });
     }
-  })
-})
-
-app.get("/lists", (req, res) => {
-  res.send(lists);
+  });
 });
 
-mongoose.connect(process.env.MONGO_URL).then((result) => {
-  console.log("Mongoose has connected.");
-  app.listen(PORT, () => {
-      console.log(`Server listening on ${PORT}`);
-    })
-}).catch((error) => console.log(error));
+app.post("/add-list", (req, res) => {
+  User.findOne({ username: req.user.username }, (err, doc) => {
+    if (err) res.status(500).json({ message: "An error has ocurred."});
+    if (!doc) res.status(401).json({ message: "Unauthorzed."});
+    console.log(req.body);
+    doc.lists.push(req.body);
+    doc.save();
+    res.status(200).json({ message: "list added" });
+  });
+});
+
+app.get("/profile", (req, res) => {
+  res.json({ user: req.user });
+});
+
+app.get("/lists", (req, res) => {
+  if (req.user) {
+    res.status(200).json(req.user.lists)
+  } else {
+    res.status(200).json({ lists: [] })
+  }
+});
+
+app.post("/logout", (req, res) => {
+  req.logout()
+  res.status(200).json({ message: "Successfully logged out."})
+})
+
+app.get("/is-authenticated", (req, res) => {
+  if (req.user) {
+    res.status(200).json({ success: true })
+  } else {
+    res.status(401).json({ success: false })
+  }
+})
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});

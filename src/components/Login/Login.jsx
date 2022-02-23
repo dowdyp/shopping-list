@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import Axios from "axios";
 
 export default function Login(props) {
 
     useEffect(() => {
         props.setLocation("Login")
-    }, [])
+    })
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -23,12 +23,9 @@ export default function Login(props) {
 
     function handleLogin(e) {
         e.preventDefault()
+        console.log("sendin")
 
-        const data = {
-            email: email,
-            password: password
-        }
-        axios({
+        Axios({
             method: "POST",
             data: {
               username: email,
@@ -37,7 +34,12 @@ export default function Login(props) {
             withCredentials: true,
             url: "http://localhost:3001/login",
           }).then((res) => {
-            console.log(res)
+            if (res.status === 401) {
+                console.log("Incorrect Credentials")
+            } else {
+                props.setIsUserAuthenticated(true)
+                navigate("/", { replace: true })
+            }
           });
     };
 
@@ -50,6 +52,7 @@ export default function Login(props) {
             <input className="loginInput" placeholder="Password" type="password" value={password} onChange={handlePasswordChange}></input>
             <br />
             <button>Submit</button>
+            <div>Don't have an account? <Link to="/register">Register</Link></div>
         </form>
     )
 }
