@@ -8,28 +8,26 @@ export default function UserLists(props) {
     const [userLists, setUserLists] = useState([])
     const [isLoading, setLoading] = useState(true)
 
-    useEffect(() => {
+    useEffect(async () => {
         props.setLocation("Your Lists")
-        axios({
+        await axios({
             method: "GET",
             url: "/lists",
             withCredentials: true,
         }).then((res) => {
-            console.log(res.data)
-            if (res.data.length !== 0) {
-                setUserLists(res.data.lists)
+            if (res.data.length) {
+                setUserLists(res.data)
             }
-            setLoading(false)
         });
     }, [])
 
     return (
-        ((!isLoading && userLists !== undefined && userLists.length > 0) ? (userLists.map(list => 
+        ((userLists.length) ? (userLists.map(list => 
             <ShoppingList 
-                key={list.id} 
-                storeName={list.name} 
-                total={list.total} 
-                numberOfItems={list.numberOfItems} />  )) 
+                key={list["_id"]}
+                storeName={list["name"]} 
+                total={list["total"]} 
+                numberOfItems={list["items"].length} />  )) 
             : 
             <div>No Lists</div>
         )

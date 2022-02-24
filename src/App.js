@@ -12,17 +12,16 @@ import axios from 'axios';
 function App(props) {
 
     const [location, setLocation] = useState("Your Lists")
-    const [lists, setLists] = useState([])
-    const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
+    const [isUserAuthenticated, setIsUserAuthenticated] = useState()
 
-    useEffect(() => {
+    useEffect(async () => {
         if (!isUserAuthenticated) {
-            axios("/is-authenticated", {
+            await axios("/is-authenticated", {
                 method: "GET", 
                 withCredentials: true
             })
             .then((res) => {
-                if (res.data.status) setIsUserAuthenticated(res.data.status)
+                if (res.data.success) setIsUserAuthenticated(true)
                 else {
                     setIsUserAuthenticated(false)
                 }
@@ -31,13 +30,13 @@ function App(props) {
                 return e
             });
         }
-    });
+    }, []);
 
     return(
         <BrowserRouter>
             <div className="AppContainer">
                 {/* NAVBAR */}
-                <Navigation location={location} isAuthenticated={isUserAuthenticated} setIsUserAuthenticated={setIsUserAuthenticated}/>
+                <Navigation location={location} isUserAuthenticated={isUserAuthenticated} setIsUserAuthenticated={setIsUserAuthenticated} />
                 {/* MAIN APP FUNCTIONALITY */}
                 <div className="ContentContainer">
                     <div className="main-header">
@@ -46,7 +45,7 @@ function App(props) {
                     <Routes>
                         <Route path="/" element={<UserLists setLocation={setLocation} isAuthenticated={isUserAuthenticated} />}/>
                         <Route path="/new-list" element={<ListCreator setLocation={setLocation} />} />
-                        <Route path="/login" element={<Login setLocation={setLocation} setLists={setLists} setIsUserAuthenticated={setIsUserAuthenticated}/> } />
+                        <Route path="/login" element={<Login setLocation={setLocation} setIsUserAuthenticated={setIsUserAuthenticated}/> } />
                         <Route path="/register" element={<Register setLocation={setLocation} /> } />
                         <Route path="/profile" element={<Profile setLocation={setLocation} isAuthenticated={isUserAuthenticated} /> } />
                     </Routes>

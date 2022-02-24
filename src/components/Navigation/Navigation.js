@@ -33,23 +33,41 @@ function Navigation(props) {
                 <NavItem label="STORES" />
                 <div className="align-right">
                     <Link to="/new-list"><NavItem icon="new-list-icon"/></Link>
-                    <div className="profile-hover">
+                    <div className="dropdown-parent">
                     <NavItem icon="profile-icon" />
                         <div className="dropdown-menu">
-                            <Link to="/profile"><li>Profile</li></Link>
-                            <Link to="/settings"><li>Settings</li></Link>
+                            <Link to="/profile">
+                                <div className="dropdown-menu-item">
+                                    Profile
+                                </div>
+                            </Link>
+
+                            <Link to="/settings">
+                                <div className="dropdown-menu-item">
+                                    Settings
+                                </div>
+                            </Link>
+                            
                             <hr />
-                            {props.isAuthenticated ? 
-                            <button onClick={handleLogout}><li>Log Out</li></button>
+
+                            {props.isUserAuthenticated ? 
+                            <button type="button" onClick={handleLogout}>
+                                <div className="dropdown-menu-item">
+                                    Log Out
+                                </div>
+                            </button>
                             :
-                            <Link to="/login"><li>Log In</li></Link>
+                            <Link to="/login">
+                                <div className="dropdown-menu-item">
+                                    Log In
+                                </div>
+                            </Link>
                             }
                         </div>
                     </div>
                 </div>
             </ul>
             <div className="hamburger-menu">
-
                 <button className="button-nostyle">
                     <div className="NavItem">
                         <GiHamburgerMenu />

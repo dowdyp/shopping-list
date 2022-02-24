@@ -42,29 +42,61 @@
     height: 20px;
 }
 
-.profile-hover:hover .dropdown-menu {
-    display: block;
-    float: right;
+.dropdown-parent {
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-menu {
-    position: relative;
+    position: absolute;
+    width: 120px;
     right: 0;
     padding: 0;
     background-color: white;
     border: solid 1px grey;
     list-style: none;
     font-family: "Outfit", sans-serif;
-    border-radius: 3px;
+    font-weight: 300;
+    border-radius: 6px;
     text-align: start;
 }
 
-.dropdown-menu li {
-    padding: 5px;
-    text-decoration: none;
-    color: black;
-    font-size: 15px;
+.dropdown-menu-item {
+    padding: 5px; 
+}
 
+.dropdown-menu a:visited {
+    color: black;
+}
+
+.dropdown-menu-item:hover {
+    background-color: rgba(247, 247, 247, 0.734);
+}
+
+.dropdown-menu hr {
+    margin: 0px;
+    border-bottom: none;
+    border-color: rgba(208, 208, 208, 0.3);
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    font-family: "Outfit", sans-serif;
+    font-weight: 300;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+    font-size: 15px;
+}
+
+.dropdown-parent:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    display: none;
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

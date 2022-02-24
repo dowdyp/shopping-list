@@ -9,10 +9,11 @@ const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const User = require("./models/user");
+const List = require("./models/shopping-list")
 const bodyParser = require("body-parser");
 const app = express();
-
 const db_url = process.env.MONGO_URL
+const cookieLife = 1000*60*60*24
 
 //-----------------------------------
 
@@ -37,7 +38,7 @@ app.use(
     resave: false,
     cookie: {
       secure: false,
-      maxAge: 3600000,
+      maxAge: cookieLife,
     }
   })
 );

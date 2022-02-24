@@ -6,7 +6,7 @@ export default function Login(props) {
 
     useEffect(() => {
         props.setLocation("Login")
-    })
+    }, [])
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
