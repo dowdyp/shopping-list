@@ -8,15 +8,14 @@ const passportLocal = require("passport-local").Strategy;
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
-const User = require("./models/user");
-const List = require("./models/shopping-list")
 const bodyParser = require("body-parser");
 const app = express();
-const db_url = process.env.MONGO_URL
-const cookieLife = 1000*60*60*24
+const cookieLife = 1000 * 60 * 60 * 24;
 
-//-----------------------------------
+// Mongo Setup
+const User = require("./models/user");
 
+const db_url = process.env.MONGO_URL;
 mongoose.connect(
   db_url,
   {
@@ -25,8 +24,10 @@ mongoose.connect(
   },
   () => {
     console.log("Mongoose is connected.");
+    const db = mongoose.connection;
   }
 );
+//-----------------------------------
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -39,7 +40,7 @@ app.use(
     cookie: {
       secure: false,
       maxAge: cookieLife,
-    }
+    },
   })
 );
 
@@ -88,10 +89,16 @@ app.post("/register", (req, res) => {
 
 app.post("/add-list", (req, res) => {
   User.findOne({ username: req.user.username }, (err, doc) => {
-    if (err) res.status(500).json({ message: "An error has ocurred."});
-    if (!doc) res.status(401).json({ message: "Unauthorzed."});
-    console.log(req.body);
-    doc.lists.push(req.body);
+    if (err) res.status(500).json({ message: "An error has ocurred." });
+    if (!doc) res.status(401).json({ message: "Unauthorzed." });
+    const newList = {
+      owner: req.user._id,
+      listName: req.body.listName,
+      items: req.body.items,
+      listTotal: req.body.total,
+      numberOfItems: req.body.items.length,
+    };
+    doc.lists.push(newList);
     doc.save();
     res.status(200).json({ message: "list added" });
   });
@@ -101,26 +108,39 @@ app.get("/profile", (req, res) => {
   res.json({ user: req.user });
 });
 
+app.get("/list/:list_id", (req, res) => {
+  User.findOne({ username: req.user.username }, (err, doc) => {
+    if (err) console.log(err);
+    if (!doc) console.log("poo");
+    if (doc) {
+      console.log(doc.lists.id(req.params.list_id))
+      res.status(200).json({
+        list: doc.lists.id(req.params.list_id)
+      });
+    }
+  });
+});
+
 app.get("/lists", (req, res) => {
   if (req.user) {
-    res.status(200).json(req.user.lists)
+    res.status(200).json(req.user.lists);
   } else {
-    res.status(200).json({ lists: [] })
+    res.status(200).json({ lists: [] });
   }
 });
 
 app.post("/logout", (req, res) => {
-  req.logout()
-  res.status(200).json({ message: "Successfully logged out."})
-})
+  req.logout();
+  res.status(200).json({ message: "Successfully logged out." });
+});
 
 app.get("/is-authenticated", (req, res) => {
   if (req.user) {
-    res.status(200).json({ success: true })
+    res.status(200).json({ success: true });
   } else {
-    res.status(401).json({ success: false })
+    res.status(401).json({ success: false });
   }
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema
 
 const listSchema = new Schema({
-    user: {
+    owner: {
         type: String,
         required: true
     },
@@ -22,9 +22,13 @@ const listSchema = new Schema({
     numberOfItems: {
         type: Number, 
         default: 0
+    },
+    shareUrl: {
+        type: String, 
+        required: false,
     }
 }, {timestamps: true})
 
-const List = mongoose.model("Lists", listSchema)
+const List = mongoose.model("List", listSchema)
 
 module.exports = List;

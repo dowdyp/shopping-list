@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import ShoppingList from '../ShoppingList/ShoppingList';
 import axios from 'axios';
 import './userlists.css'
@@ -22,12 +23,12 @@ export default function UserLists(props) {
     }, [])
 
     return (
-        ((userLists.length) ? (userLists.map(list => 
-            <ShoppingList 
-                key={list["_id"]}
-                storeName={list["name"]} 
-                total={list["total"]} 
-                numberOfItems={list["items"].length} />  )) 
+        ((userLists.length) ? (userLists.map((list, index) => 
+            <Link to={`list/${list["_id"]}`}><ShoppingList 
+                key={index}
+                storeName={list["listName"]} 
+                total={list["listTotal"]} 
+                numberOfItems={list["numberOfItems"]} /></Link>  )) 
             : 
             <div>No Lists</div>
         )

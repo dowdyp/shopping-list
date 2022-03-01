@@ -14,25 +14,31 @@ function ListCreator(props) {
     const [value, setValue] = useState("");
     const [listItems, setItems] = useState(items)
     const [listTotalValue, setListTotalValue] = useState(0)
-    const [name, setName] = useState("")
+    const [listName, setListName] = useState("")
+    const [itemPrice, setItemPrice] = useState(0)
 
     useEffect(() => {
         props.setLocation("New List")
     })
 
     const addItemHandler = () => {
-        setItems(items => [...items, {name: value, total: 500}]);
-        setListTotalValue(listTotalValue + 500);
+        setItems(items => [...items, {completed: false, name: value, itemPrice: itemPrice}]);
+        setListTotalValue(listTotalValue + itemPrice);
         setValue("");
         setIsEditing(false);
+        setItemPrice(0)
     }
 
-    const handleListNameChange = (event) => {
-        setName(event.target.value);
+    const handleListNameChange = (e) => {
+        setListName(e.target.value);
     }
 
-    const handleItemNameChange = (event) => {
-        setValue(event.target.value);
+    const handleItemNameChange = (e) => {
+        setValue(e.target.value);
+    }
+
+    const handleItemPriceChange = (e) => {
+        setItemPrice(parseInt(e.target.value) || 0)
     }
 
     const addListToUser = () => {
@@ -40,9 +46,9 @@ function ListCreator(props) {
             axios({
                 method: "POST", 
                 data: {
-                    name: name,
+                    listName: listName,
                     total: listTotalValue,
-                    items: items,
+                    items: listItems,
                 },
                 url: "/add-list",
                 withCredentials: true,
@@ -71,6 +77,7 @@ function ListCreator(props) {
             {editing ? 
                 <div>
                     <input placeholder="Item Name" onChange={handleItemNameChange}></input>
+                    <input placeholder="Price" onChange={handleItemPriceChange}></input>
                     <button type="button" onClick={addItemHandler}>Add</button>
                 </div>
             :

@@ -10,13 +10,35 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    lists: {
-        type: Array,
-        requied: true,
-        default: []
-    }
+    lists: [{
+        owner: {
+            type: String,
+            required: true
+        },
+        listName: {
+            type: String, 
+            default: "New List"
+        },
+        items: {
+            type: Array, 
+            required: false,
+            default: []
+        },
+        listTotal: {
+            type: Number,
+            default: 0
+        },
+        numberOfItems: {
+            type: Number, 
+            default: 0
+        },
+        shareUrl: {
+            type: String, 
+            required: false,
+        }
+    }]
 }, {timestamps: true})
 
-const User = mongoose.model("Users", userSchema)
+const User = mongoose.model("User", userSchema)
 
 module.exports = User;

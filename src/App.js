@@ -6,6 +6,7 @@ import ListCreator from './components/ListCreator/ListCreator';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Profile from './components/Profile/Profile';
+import ViewList from './components/ViewList/ViewList';
 import './app.css';
 import axios from 'axios';
 
@@ -48,6 +49,7 @@ function App(props) {
                         <Route path="/login" element={<Login setLocation={setLocation} setIsUserAuthenticated={setIsUserAuthenticated}/> } />
                         <Route path="/register" element={<Register setLocation={setLocation} /> } />
                         <Route path="/profile" element={<Profile setLocation={setLocation} isAuthenticated={isUserAuthenticated} /> } />
+                        <Route path="/list/:id" element={<ViewList isAuthenticated={isUserAuthenticated} setLocation={setLocation} />}  />
                     </Routes>
                 </div>
             </div>
