@@ -93,7 +93,7 @@ app.post("/add-list", (req, res) => {
     if (!doc) res.status(401).json({ message: "Unauthorzed." });
     const newList = {
       owner: req.user._id,
-      listName: req.body.listName,
+      listName: req.body.listName || "Untitled List",
       items: req.body.items,
       listTotal: req.body.total,
       numberOfItems: req.body.items.length,
