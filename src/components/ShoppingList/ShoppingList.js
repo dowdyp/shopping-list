@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './shoppinglist.css';
 
 function List(props) {
 
-    const { storeName, numberOfItems, total } = props
+    const { storeName, numberOfItems, total, id } = props
 
     return(
         <div className="ListContainer">
@@ -17,7 +18,9 @@ function List(props) {
                 ${total.toFixed(2)}
             </div>
             <div className="ButtonContainer">
-                <button className="ViewListButton">View List</button>
+                <Link to={`list/${id}`}>
+                    <button className="ViewListButton">View List</button>
+                </Link>
             </div>
         </div>
     )

@@ -14,6 +14,7 @@ const cookieLife = 1000 * 60 * 60 * 24;
 
 // Mongo Setup
 const User = require("./models/user");
+const MongoStore = require("connect-mongo");
 
 const db_url = process.env.MONGO_URL;
 mongoose.connect(
@@ -37,10 +38,14 @@ app.use(
     secret: process.env.APP_SECRET,
     saveUninitialized: true,
     resave: false,
-    cookie: {
-      secure: false,
-      maxAge: cookieLife,
-    },
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URL,
+      ttl: cookieLife,
+      autoRemove: 'native',
+      crypto: {
+        secret: process.env.APP_SECRET,
+      },
+    }),
   })
 );
 
@@ -111,9 +116,8 @@ app.get("/profile", (req, res) => {
 app.get("/list/:list_id", (req, res) => {
   User.findOne({ username: req.user.username }, (err, doc) => {
     if (err) console.log(err);
-    if (!doc) console.log("poo");
+    if (!doc) res.status(401).json({ message: "User not found" })
     if (doc) {
-      console.log(doc.lists.id(req.params.list_id))
       res.status(200).json({
         list: doc.lists.id(req.params.list_id)
       });
